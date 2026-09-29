@@ -1,2 +1,6 @@
 /result
 /etc/nixos/secrets/
+/secrets/*.hash
+/secrets/*.env
+/secrets/*.key
+/secrets/keys.txt

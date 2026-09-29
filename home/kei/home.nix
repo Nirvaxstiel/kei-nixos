@@ -5,8 +5,10 @@
     ./modules/floorp.nix
     ./modules/ghostty.nix
     ./modules/git.nix
+    ./modules/hermes-agent.nix
     ./modules/noctalia.nix
     ./modules/shell.nix
+    ./modules/sops.nix
     ./modules/zed.nix
   ];
 
