@@ -23,14 +23,4 @@
       export EDITOR=${pkgs.vim}/bin/vim
     '';
   };
-
-  # User identity (per DDD: capability at system, identity at user).
-  # FILL: set your real name/email; git commit will prompt without these.
-  programs.git = {
-    enable = true;
-    settings.user = {
-      name = "REPLACE_WITH_GIT_NAME";
-      email = "replace@example.com";
-    };
-  };
 }

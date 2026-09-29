@@ -2,8 +2,12 @@
 
 {
   imports = [
+    ./modules/floorp.nix
+    ./modules/ghostty.nix
+    ./modules/git.nix
     ./modules/noctalia.nix
     ./modules/shell.nix
+    ./modules/zed.nix
   ];
 
   home = {
