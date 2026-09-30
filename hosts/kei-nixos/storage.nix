@@ -1,4 +1,3 @@
-# --- DOMAIN: External Storage ---
 # TRIVIA:
 # 1. Why 'ntfs-3g'? Kernel 'ntfs3' driver is faster but handles
 #    'dirty bits' poorly. ntfs-3g is stable for data-at-rest.

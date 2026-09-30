@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-  # --- DOMAIN: Identity ---
   # Name MUST match services.greetd.user (default "kei") in modules/services/greetd.nix,
   # otherwise the greeter has no account to start the session as.
   users.users.kei = {

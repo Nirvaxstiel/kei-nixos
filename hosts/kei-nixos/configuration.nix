@@ -7,6 +7,7 @@
     ../../modules/core
     ../../modules/desktop
     ../../modules/services
+    ../../modules/gpu/nvidia.nix
   ];
 
   networking.hostName = "kei-nixos";

@@ -1,4 +1,3 @@
-# --- DOMAIN: User Shell (Home-Manager) ---
 # TRIVIA:
 # 1. programs.bash owns ~/.bashrc / ~/.profile / ~/.bash_profile as symlinks.
 # 2. LANDMINE: editing those files directly = wiped on next rebuild.
