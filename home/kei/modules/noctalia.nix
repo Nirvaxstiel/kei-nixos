@@ -7,8 +7,9 @@
 
   programs.noctalia = {
     enable = true;
-    # Auto-start the shell inside the Wayland session (niri-session target).
-    # If it doesn't come up after login, fall back to niri spawn-at-startup.
+    # Start the shell with the Wayland session (the niri-session target).
+    # If the shell does not start after login, use niri spawn-at-startup
+    # instead.
     systemd.enable = true;
   };
 }

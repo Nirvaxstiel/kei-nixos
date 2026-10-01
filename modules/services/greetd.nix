@@ -1,11 +1,13 @@
 { config, lib, ... }:
 
-# Flip/remove: drop this module's import from modules/services/default.nix.
-# Swap compositor: change the command below (e.g. to hyprland).
+# To remove this module, delete its import from modules/services/default.nix.
+# To change the compositor, change the command below (for example, to
+# hyprland).
 #
-# LANDMINE: once a module declares a top-level `options` key, ALL config must
-# live under the explicit `config` attr — top-level config shorthand (e.g.
-# `services.greetd = {...}`) is rejected. Hence the `config = { ... }` wrap.
+# CAUTION: a module that declares a top-level `options` key must put all config
+# in the explicit `config` attribute. NixOS rejects the top-level shorthand
+# (for example, `services.greetd = {...}`). This is why the file uses the
+# `config = { ... }` form.
 {
   options.services.greetd.user = lib.mkOption {
     type = lib.types.str;

@@ -1,9 +1,10 @@
 # TRIVIA:
 # 1. programs.bash owns ~/.bashrc / ~/.profile / ~/.bash_profile as symlinks.
-# 2. LANDMINE: editing those files directly = wiped on next rebuild.
-#    Put every change here (initExtra / shellAliases), never the symlink.
-# 3. EMERGENCY: 'read-only' on a dotfile = you are editing a managed symlink.
-#    Stop, modify the Nix source, rebuild.
+# 2. CAUTION: an edit to those files does not survive the next rebuild.
+#    Put each change in this file (initExtra / shellAliases), not in the
+#    symlink.
+# 3. EMERGENCY: a 'read-only' error on a dotfile means that you edit a managed
+#    symlink. Stop. Change the Nix source. Then rebuild.
 { pkgs, ... }:
 
 {
@@ -11,7 +12,8 @@
     enable = true;
     enableCompletion = true;
 
-    # Example aliases only — commented out; prefer full `ls -la` by habit.
+    # Example aliases. This block is commented out. The habit is to use the
+    # full `ls -la`.
     # shellAliases = {
     #   ll = "ls -l";
     #   la = "ls -A";

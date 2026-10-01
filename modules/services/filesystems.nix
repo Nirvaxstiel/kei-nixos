@@ -2,9 +2,10 @@
 {
   boot.supportedFilesystems = [ "ntfs" ];
 
-  # Enables the UDisks2 service which handles automounting for removable media
+  # This option turns on the UDisks2 service. That service automounts
+  # removable media.
   services.udisks2.enable = true;
   
-  # Ensure your user environment has the tools to interact with the GUI
+  # Make sure that the user environment has the tools for the GUI.
   services.gvfs.enable = true; 
 }

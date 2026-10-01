@@ -1,5 +1,6 @@
 {
-  # FILL: set your real name/email; git commit will prompt without these.
+  # FILL: set your name and email. Without these values, git commit asks for
+  # them each time.
   programs.git = {
     enable = true;
     settings.user = {

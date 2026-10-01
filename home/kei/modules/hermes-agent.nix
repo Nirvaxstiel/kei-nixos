@@ -10,7 +10,7 @@
   services.hermes-agent = {
     enable = true;
 
-    # uvx backs the jcodemunch MCP server below (uvx ships inside uv).
+    # The jcodemunch MCP server below uses uvx. uvx is part of uv.
     extraPackages = [ pkgs.uv ];
 
     mcpServers.jcodemunch = {
@@ -155,8 +155,9 @@
         };
       };
 
-      # Bundled-skill selection. Authored/auto-created skills live in HERMES_HOME
-      # and travel by `hermes backup`, never through this repo.
+      # Skill selection for the bundled skills. Skills that you write, or that
+      # the agent creates, live in HERMES_HOME. Use `hermes backup` to move
+      # them. They never go through this repo.
       skills.disabled = [
         "airtable"
         "arxiv"
@@ -196,13 +197,14 @@
       ];
     };
 
-    # FILL: write OPENROUTER_API_KEY=... here, mode 600. Never via `environment`
-    # or `settings` — anything in a Nix expression lands in the world-readable store.
-    # Activation merges this into $HERMES_HOME/.env on every rebuild.
+    # FILL: write OPENROUTER_API_KEY=... in this file with mode 600.
+    # Do not use `environment` or `settings` for secrets. Each value in a Nix
+    # expression goes into the world-readable store. The activation merges this
+    # file into $HERMES_HOME/.env at each rebuild.
     environmentFiles = [ "${config.home.homeDirectory}/.hermes/env" ];
 
-    # Messaging (Telegram/Discord/Slack) needs the extras sealed into the venv at
-    # build time, plus the user-level service running past logout:
+    # Messaging (Telegram/Discord/Slack) needs the extras in the venv at build
+    # time. The user-level service must also stay up after logout:
     #   gateway.enable = true; extraDependencyGroups = [ "messaging" ];
   };
 }

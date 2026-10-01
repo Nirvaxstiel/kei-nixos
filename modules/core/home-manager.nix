@@ -5,9 +5,9 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  # TRIVIA: one `nixos-rebuild switch` builds system + HM in one invocation,
-  # but HM activates as a SEPARATE phase (user activation script) after the
-  # system switch. Not a single ACID transaction — two phases, one command.
+  # TRIVIA: one `nixos-rebuild switch` builds the system and HM together.
+  # HM then activates in a separate phase, after the system switch. This is not
+  # one atomic transaction. It is two phases and one command.
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
