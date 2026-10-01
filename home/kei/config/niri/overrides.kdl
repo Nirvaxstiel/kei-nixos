@@ -1,0 +1,20 @@
+// Local niri settings. The seed adds one include line for this file to the
+// config that niri's own version ships, so every value here overrides the stock
+// value. Only the settings that differ from the stock config belong here.
+// Full option reference: https://yalter.github.io/niri/Configuration:-Introduction
+
+output "DP-1" {
+    mode "3440x1440@164.900"
+    scale 1
+    transform "normal"
+    position x=3440 y=-180
+}
+
+output "DP-2" {
+    mode "1920x1080@144.001"
+    scale 1
+    transform "normal"
+    position x=0 y=0
+}
+
+
