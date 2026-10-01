@@ -6,6 +6,7 @@
     ./modules/ghostty.nix
     ./modules/git.nix
     ./modules/hermes-agent.nix
+    ./modules/niri.nix
     ./modules/noctalia.nix
     ./modules/shell.nix
     ./modules/sops.nix
