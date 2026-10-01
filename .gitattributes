@@ -1,0 +1,4 @@
+# Keep every text file LF in the repository and in the working tree.
+# Windows edits and Linux deployment share this repo, and a CRLF shell
+# script fails on Linux with a bad interpreter error.
+* text=auto eol=lf
