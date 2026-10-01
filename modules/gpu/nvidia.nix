@@ -1,37 +1,27 @@
 {
   imports = [ ./graphics.nix ];
 
-  # One GPU vendor per host. The host imports exactly one file from
-  # modules/gpu/.
+  # One GPU vendor per host. A host imports exactly one file from modules/gpu/.
 
-  # This list turns on the hardware.nvidia module.
-  # hardware.nvidia.enabled is readOnly, and it copies this list.
+  # Turns on the hardware.nvidia module.
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  # Driver version 560 and later need this option.
-  # nvidia.nix asserts that the value is not null.
-  # The RTX 4070 Super is Turing or newer, so the open kernel modules apply.
-  # Upstream moves to these modules. The userspace libraries stay proprietary.
+  # Required from driver 560 and later; the module asserts that it is not null.
+  # Turing (RTX 20xx, GTX 16xx) and newer use the open kernel modules. The
+  # userspace libraries stay proprietary.
   hardware.nvidia.open = true;
 
-  # Wayland needs kernel mode setting. The default of this option is the
-  # comparison `version >= 535`. Set the value here to show the intention.
-  # This option also sets nvidia-drm.modeset=1 and nvidia-drm.fbdev=1.
+  # Wayland needs kernel mode setting. This also sets nvidia-drm.modeset=1 and
+  # nvidia-drm.fbdev=1.
   hardware.nvidia.modesetting.enable = true;
 
-  # nvidia.nix loads these modules at boot only when services.xserver.enable
-  # is true. A Wayland-only niri host never sets that option, because niri
-  # passes enableXWayland = false. Without this list, the modules wait for
-  # udev after fbdev is necessary.
+  # The module loads these itself only when X11 is enabled. This host runs niri
+  # on Wayland, so it has to list them.
   boot.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" ];
 
-  # The userspace driver is unfree. The nvidia module also always adds
-  # nvidia-settings to environment.systemPackages. These names are pnames,
-  # because check-meta matches lib.getName. allowUnfreePackages merges
-  # additively. As a result, the unfree policy stays in the module that needs
-  # it. A vendor swap removes the policy together with this file.
-  # `nvidia-kernel-modules` is absent on purpose, because the module builds
-  # that package only when open = false.
+  # The driver is unfree. These are package names. The list merges with other
+  # modules, so the exception stays with the file that needs it and disappears
+  # when the vendor changes.
   nixpkgs.config.allowUnfreePackages = [
     "nvidia-settings"
     "nvidia-x11"

@@ -155,9 +155,8 @@
         };
       };
 
-      # Skill selection for the bundled skills. Skills that you write, or that
-      # the agent creates, live in HERMES_HOME. Use `hermes backup` to move
-      # them. They never go through this repo.
+      # Skills the agent writes live in HERMES_HOME, not in this repo. Use
+      # `hermes backup` to move them to another machine.
       skills.disabled = [
         "airtable"
         "arxiv"
@@ -197,14 +196,14 @@
       ];
     };
 
-    # FILL: write OPENROUTER_API_KEY=... in this file with mode 600.
-    # Do not use `environment` or `settings` for secrets. Each value in a Nix
-    # expression goes into the world-readable store. The activation merges this
-    # file into $HERMES_HOME/.env at each rebuild.
+    # Put OPENROUTER_API_KEY=... in this file and chmod it 600. Do not put
+    # secrets in `environment` or `settings`: every value in a Nix expression
+    # lands in the world-readable store. Each rebuild merges this file into
+    # $HERMES_HOME/.env.
     environmentFiles = [ "${config.home.homeDirectory}/.hermes/env" ];
 
-    # Messaging (Telegram/Discord/Slack) needs the extras in the venv at build
-    # time. The user-level service must also stay up after logout:
+    # Telegram, Discord and Slack need their extras in the venv at build time,
+    # and the user service must survive logout:
     #   gateway.enable = true; extraDependencyGroups = [ "messaging" ];
   };
 }

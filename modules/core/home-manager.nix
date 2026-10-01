@@ -5,9 +5,9 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  # TRIVIA: one `nixos-rebuild switch` builds the system and HM together.
-  # HM then activates in a separate phase, after the system switch. This is not
-  # one atomic transaction. It is two phases and one command.
+  # One `nixos-rebuild switch` builds the system and the user config together,
+  # but they activate in two separate phases. If the second phase fails, the
+  # system phase has already switched.
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
