@@ -19,10 +19,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Hermes installs through `nix profile`, not this flake: its uv2nix build is
+    # heavy and upstream marks Nix support best-effort, so a system rebuild must
+    # not depend on it. Re-enable once the flake publishes a binary cache.
+    # hermes-agent = {
+    #   url = "github:NousResearch/hermes-agent";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
