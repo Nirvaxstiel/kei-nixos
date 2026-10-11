@@ -4,10 +4,21 @@
   imports = [
     ./hardware.nix
     ./storage.nix
-    ../../modules/core
-    ../../modules/desktop
-    ../../modules/services
+
+    ../../modules/home-manager.nix
+    ../../modules/nix.nix
+    ../../modules/shell.nix
+    ../../modules/tools.nix
+    ../../modules/user.nix
+
+    ../../modules/git/nixos.nix
     ../../modules/gpu/nvidia.nix
+
+    ../../modules/desktop/niri/nixos.nix
+    ../../modules/desktop/thunar.nix
+
+    ../../modules/services/filesystems.nix
+    ../../modules/services/greetd.nix
   ];
 
   networking.hostName = "kei-nixos";

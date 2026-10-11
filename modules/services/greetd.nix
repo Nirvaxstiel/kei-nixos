@@ -1,6 +1,6 @@
 { config, lib, ... }:
 
-# To remove this module, delete its import from modules/services/default.nix.
+# To remove this module, delete its import from hosts/kei-nixos/configuration.nix.
 # To change the compositor, change the command below (for example, to
 # hyprland).
 #

@@ -11,6 +11,6 @@
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
-    users.kei = import ../../home/kei/home.nix;
+    users.kei = import ../home/kei/home.nix;
   };
 }

@@ -2,18 +2,15 @@
 
 {
   imports = [
-    ./modules/floorp.nix
-    ./modules/ghostty.nix
-    ./modules/git.nix
+    ../../modules/desktop/niri/home-manager.nix
+    ../../modules/floorp.nix
+    ../../modules/git/home-manager.nix
     # Hermes installs through `nix profile`. See the hermes-agent input in flake.nix.
-    # ./modules/hermes-agent.nix
-    ./modules/niri.nix
-    ./modules/noctalia.nix
-    ./modules/rio.nix
-    ./modules/shell.nix
-    ./modules/sops.nix
-    ./modules/wezterm.nix
-    ./modules/zed.nix
+    # ../../modules/hermes.nix
+    ../../modules/noctalia.nix
+    ../../modules/sops.nix
+    ../../modules/terminals.nix
+    ../../modules/zed.nix
   ];
 
   home = {
