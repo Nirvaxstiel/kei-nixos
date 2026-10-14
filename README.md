@@ -5,42 +5,53 @@ reuse it, replace all instances of `kei-nixos` with the desired hostname and
 `kei` with the desired user name. For the actual dotfiles, see
 [my dotfiles repo](https://github.com/Nirvaxstiel/dotfiles).
 
-The repo builds the system: packages, services, the GPU driver, the login
-screen, and the `kei` account. I keep most personal config files out of it —
-`rio/config.toml`, the shell rc files and the rio themes live in chezmoi
-instead. home-manager installs files as read-only symlinks into the Nix store,
-so saving a change produces a permission error; chezmoi writes real files I can
-edit.
+I keep personal config files out of this repo. `rio/config.toml`, the shell rc
+files, the niri keybinds and the rio themes live in chezmoi instead. A Nix-built
+config is a read-only symlink into the store, so saving a change produces a
+permission error; chezmoi writes real files I can edit.
 
-I keep niri's keybinds at `modules/desktop/niri/overrides.kdl`. They stay here
-because they depend on what this repo installs: `Mod+T` starts ghostty, and the
-Noctalia binds call Noctalia's IPC. A terminal change belongs in the same commit
-as its keybind.
+I dropped home-manager. Everything here is system-level: one activation, one
+transaction, no second phase that can fail halfway.
 
 ## Where things are
 
     flake.nix
     hosts/kei-nixos/            configuration.nix, hardware.nix, storage.nix
-    home/kei/home.nix           home-manager entry point
     modules/                    the only module root
     bin/set-password.sh         writes the initial password hash
     secrets/sops.yaml           tracked, not yet wired up
 
-Modules are grouped by what they do, not by which system reads them. When a
-feature has both a system side and a user side, it gets a directory with one
-file per side:
+Modules are named for what they do. Each is a single file, imported explicitly
+by `hosts/kei-nixos/configuration.nix`:
 
-      modules/git/nixos.nix                    programs.git, the binary
-      modules/git/home-manager.nix             programs.git + lazygit, user config
-      modules/desktop/niri/nixos.nix           programs.niri
-      modules/desktop/niri/home-manager.nix    overrides.kdl + default-config seeding
-      modules/desktop/niri/overrides.kdl       keybinds and output layout
+      modules/nix.nix                  flakes and the Nix daemon
+      modules/shell.nix                bash completion, EDITOR
+      modules/user.nix                 the kei account, sudo, linger
+      modules/packages.nix             everything installed without config
+      modules/git.nix                  git and lazygit
+      modules/desktop/niri.nix         the compositor, plus config seeding
+      modules/desktop/thunar.nix       the file manager
+      modules/gpu/nvidia.nix           the driver (amd.nix is the alternative)
+      modules/services/greetd.nix      the login screen
+      modules/services/filesystems.nix mounts
+      modules/noctalia.nix             the shell and bar
+      modules/sops.nix                 secrets, currently inert
 
-When a feature only has one side, it is a single file. The importing file
-decides the side: `hosts/kei-nixos/configuration.nix` imports the system
-modules, `home/kei/home.nix` imports the user ones. Both spell their imports
-out. There are no `default.nix` files tying a folder together, because on one
-machine they only make it harder to see what is pulling a file in.
+There are no `default.nix` files tying a folder together; on one machine they
+only make it harder to see what is pulling a file in.
+
+## niri's config
+
+niri writes `~/.config/niri/config.kdl` itself, from the default config that its
+own version ships, and only when the file is missing. I seed that file on first
+activation from `modules/desktop/niri.nix`, appending one line:
+
+    include "overrides.kdl" optional=true
+
+I never keep a copy of niri's default config, so it cannot fall behind the
+installed version. `overrides.kdl` — the keybinds and monitor layout — is
+chezmoi's, included as optional so a machine that has not applied chezmoi yet
+still starts niri.
 
 ## Things I do by hand
 
@@ -57,9 +68,8 @@ update. I install it into the `kei` profile instead:
     hermes gateway install        # installs a systemd user service
     systemctl --user status hermes-agent
 
-`flake.nix` and `home/kei/home.nix` keep the Hermes wiring in comments. If
-upstream ever publishes a binary cache, uncomment both and it goes back to being
-declarative.
+`flake.nix` keeps the wiring in comments. If upstream ever publishes a binary
+cache, uncomment it and it goes back to being declarative.
 
 I leave `users.users.kei.linger` enabled in `modules/user.nix`; without it the
 user service stops when the session ends.

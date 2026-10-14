@@ -5,20 +5,22 @@
     ./hardware.nix
     ./storage.nix
 
-    ../../modules/home-manager.nix
     ../../modules/nix.nix
     ../../modules/shell.nix
-    ../../modules/tools.nix
     ../../modules/user.nix
+    ../../modules/packages.nix
 
-    ../../modules/git/nixos.nix
+    ../../modules/git.nix
     ../../modules/gpu/nvidia.nix
 
-    ../../modules/desktop/niri/nixos.nix
+    ../../modules/desktop/niri.nix
     ../../modules/desktop/thunar.nix
 
     ../../modules/services/filesystems.nix
     ../../modules/services/greetd.nix
+
+    ../../modules/noctalia.nix
+    ../../modules/sops.nix
   ];
 
   networking.hostName = "kei-nixos";

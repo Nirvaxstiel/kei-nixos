@@ -14,11 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Hermes installs through `nix profile`, not this flake: its uv2nix build is
     # heavy and upstream marks Nix support best-effort, so a system rebuild must
     # not depend on it. Re-enable once the flake publishes a binary cache.
