@@ -5,13 +5,9 @@ reuse it, replace all instances of `kei-nixos` with the desired hostname and
 `kei` with the desired user name. For the actual dotfiles, see
 [my dotfiles repo](https://github.com/Nirvaxstiel/dotfiles).
 
-I keep personal config files out of this repo. `rio/config.toml`, the shell rc
-files, the niri keybinds and the rio themes live in chezmoi instead. A Nix-built
-config is a read-only symlink into the store, so saving a change produces a
-permission error; chezmoi writes real files I can edit.
-
-I dropped home-manager. Everything here is system-level: one activation, one
-transaction, no second phase that can fail halfway.
+I keep personal config files out of this repo; they live in chezmoi instead. A
+Nix-built config is a read-only symlink into the store, so saving a change
+produces a permission error; chezmoi writes real files I can edit.
 
 ## Where things are
 
@@ -78,3 +74,8 @@ user service stops when the session ends.
 
 Secrets are not set up yet. See the
 [sops-nix docs](https://github.com/Mic92/sops-nix) for how to add them.
+
+## Future consideration
+
+A possible improvement is an interactive installer script that sets up the
+entire NixOS configuration. It is not implemented yet.
