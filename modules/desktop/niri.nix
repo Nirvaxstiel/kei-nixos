@@ -6,9 +6,10 @@ in
 {
   programs.niri.enable = true;
 
-  # Thunar is the file manager, so Nautilus stays out of the closure. The GTK
-  # portal provides the file chooser.
-  programs.niri.useNautilus = false;
+  # Nautilus is the file manager and the GNOME portal's file chooser. The niri
+  # module wires it into the D-Bus portal when this is true (which is also the
+  # module default).
+  programs.niri.useNautilus = true;
 
   # niri creates ~/.config/niri/config.kdl by itself when the file is missing,
   # and fills it from the default config that its own version ships. That

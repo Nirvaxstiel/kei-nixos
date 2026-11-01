@@ -26,7 +26,7 @@ by `hosts/kei-nixos/configuration.nix`:
       modules/packages.nix             everything installed without config
       modules/git.nix                  git and lazygit
       modules/desktop/niri.nix         the compositor, plus config seeding
-      modules/desktop/thunar.nix       the file manager
+      modules/desktop/nautilus.nix      the file manager
       modules/gpu/nvidia.nix           the driver (amd.nix is the alternative)
       modules/services/greetd.nix      the login screen
       modules/services/filesystems.nix mounts

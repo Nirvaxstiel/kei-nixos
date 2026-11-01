@@ -14,7 +14,7 @@
     ../../modules/gpu/nvidia.nix
 
     ../../modules/desktop/niri.nix
-    ../../modules/desktop/thunar.nix
+    ../../modules/desktop/nautilus.nix
 
     ../../modules/services/filesystems.nix
     ../../modules/services/greetd.nix
