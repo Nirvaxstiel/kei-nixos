@@ -14,6 +14,13 @@
     # Editor
     zed-editor
     package-version-server # Zed Nix Language Support
+    # $EDITOR entry point: blocks until the buffer closes, falls back to nano.
+    (writeShellScriptBin "zed-edit" ''
+      if ! zeditor --wait "$@"; then
+        echo "zed-edit: zed failed, falling back to nano" >&2
+        exec nano "$@"
+      fi
+    '')
 
     # Dotfiles manager
     chezmoi
