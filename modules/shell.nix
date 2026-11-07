@@ -8,7 +8,4 @@
   # back to nano when Zed cannot start.
   environment.variables.EDITOR = "zed-edit";
   environment.variables.VISUAL = "zed-edit";
-
-  # nixpkgs renames Zed's `zed` CLI to `zeditor` (pkgs.zed is the Brimdata tool).
-  environment.shellAliases.zed = "zeditor";
 }

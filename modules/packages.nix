@@ -1,40 +1,23 @@
 { pkgs, ... }:
 
 {
+  # System scope: available to root, to systemd units and to every account.
+  # Personal applications live in modules/user.nix.
   environment.systemPackages = with pkgs; [
-    # Terminals
-    ghostty
+    # Archivers. The base install has tar, gzip, bzip2, xz and zstd, but not
+    # zip or 7z.
+    p7zip
+    unzip
+    zip
 
-    # Shell tools
-    oh-my-posh
-    zoxide
-    btop
-    fastfetch
-
-    # Editor
-    zed-editor
-    package-version-server # Zed Nix Language Support
-    # $EDITOR entry point: blocks until the buffer closes, falls back to nano.
+    # $EDITOR target. EDITOR is exported system-wide (modules/shell.nix), so
+    # this binary must resolve outside the user profile. Zed is not on root's
+    # PATH; the wrapper degrades to nano there.
     (writeShellScriptBin "zed-edit" ''
       if ! zeditor --wait "$@"; then
         echo "zed-edit: zed failed, falling back to nano" >&2
         exec nano "$@"
       fi
     '')
-
-    # Dotfiles manager
-    chezmoi
-
-    # Browsers
-    floorp-bin
-
-    # Password manager
-    keepassxc
-
-    # Archivers. The base install has tar, gzip, bzip2, xz and zstd, but not
-    # zip or 7z.
-    p7zip
-    unzip
-    zip
   ];
 }

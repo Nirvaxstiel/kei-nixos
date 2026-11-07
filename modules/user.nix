@@ -14,6 +14,31 @@
     # The hash is read at switch time from this path. The file never enters the
     # nix store and is never committed. bin/set-password.sh writes it.
     hashedPasswordFile = "/etc/nixos/secrets/kei.hash";
+
+    # User scope: installed into /etc/profiles/per-user/kei, ahead of
+    # /run/current-system/sw/bin on PATH. Independent of the imperative
+    # ~/.nix-profile managed by `nix profile`.
+    packages = with pkgs; [
+      # Editor
+      zed-editor
+      package-version-server # Zed Nix Language Support
+
+      # Terminal
+      ghostty
+
+      # Shell tools
+      oh-my-posh
+      zoxide
+      btop
+      fastfetch
+
+      # Desktop applications
+      floorp-bin
+      keepassxc
+
+      # Dotfiles manager
+      chezmoi
+    ];
   };
 
   security.sudo.extraRules = [
