@@ -1,15 +1,14 @@
-# No filesystem from this file is mounted yet. To add one, read the device UUID
-# with `ls -l /dev/disk/by-uuid/` on the installed machine, put it in place of
-# UUID_HERE, then uncomment the block at the bottom.
-#
-# Use the fsType "ntfs-3g". The in-kernel "ntfs3" driver is faster, but it
-# handles a filesystem that Windows left dirty badly. ntfs-3g is the stable
-# choice for data at rest. It runs through FUSE, so pkgs.ntfs3g must be in
-# environment.systemPackages. To use the kernel driver instead, change fsType to
-# "ntfs3" and delete the uid, gid and umask options.
-#
-# When a mount returns read-only, Windows left its "Fast Startup" bit set. Boot
-# Windows and run `powercfg /h off`, or run `ntfsfix -d /dev/sdX` from Linux.
+# The actual mounts live in storage.local.nix, which is machine-specific and
+# gitignored. The import below is REQUIRED — the eval fails without the file,
+# so a clone never silently mounts another machine's disks. On a new machine,
+# create an empty module (`printf '{}\n' > storage.local.nix`) and add mounts
+# there.
+import ./storage.local.nix
+
+# Mount template. Read the filesystem's UUID with `ls -l /dev/disk/by-uuid/`,
+# put it in place of UUID_HERE, then copy the block into storage.local.nix.
+# A by-uuid device survives a port swap or a renumbered /dev node; a
+# /dev/sdX* or /dev/nvmeXnYpZ name does not.
 #
 # fileSystems."/mnt/data" = {
 #   device = "/dev/disk/by-uuid/UUID_HERE";
@@ -22,4 +21,15 @@
 #     "x-systemd.automount"
 #   ];
 # };
-{}
+#
+# fsType "auto" does not guarantee a particular NTFS driver. Set "ntfs3"
+# for the kernel driver or "ntfs-3g" for FUSE. Both support uid, gid and
+# umask. On NixOS 26.05, boot.supportedFilesystems = [ "ntfs" ] supplies
+# the ntfs-3g mount helper.
+#
+# If an NTFS volume refuses to mount read-write, the volume may be flagged
+# dirty — commonly by Windows "Fast Startup" on shutdown. Boot Windows and
+# run `powercfg /h off`. `ntfsfix` only clears the dirty flag and fixes very
+# basic problems; it is NOT a chkdsk replacement, and a filesystem with real
+# corruption needs Windows' `chkdsk /f` to repair before it will mount
+# read-write again.

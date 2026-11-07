@@ -12,7 +12,9 @@ produces a permission error; chezmoi writes real files I can edit.
 ## Where things are
 
     flake.nix
-    hosts/kei-nixos/            configuration.nix, hardware.nix, storage.nix
+    hosts/kei-nixos/            configuration.nix, hardware.nix, storage.nix,
+                                plus the gitignored hardware.local.nix and
+                                storage.local.nix
     modules/                    the only module root
     bin/set-password.sh         writes the initial password hash
     secrets/sops.yaml           tracked, not yet wired up
@@ -24,7 +26,8 @@ by `hosts/kei-nixos/configuration.nix`:
       modules/shell.nix                bash completion, EDITOR
       modules/user.nix                 the kei account, sudo, linger
       modules/packages.nix             everything installed without config
-      modules/git.nix                  git and lazygit
+      modules/git.nix                  git and lazygit, plus the gitignored
+                                        git.local.nix with programs.git.config
       modules/desktop/niri.nix         the compositor, plus config seeding
       modules/desktop/nautilus.nix      the file manager
       modules/gpu/nvidia.nix           the driver (amd.nix is the alternative)
@@ -35,6 +38,43 @@ by `hosts/kei-nixos/configuration.nix`:
 
 There are no `default.nix` files tying a folder together; on one machine they
 only make it harder to see what is pulling a file in.
+
+## Local (gitignored) artifacts
+
+`hardware.nix` and `storage.nix` are tracked wrappers that import
+`hardware.local.nix` and `storage.local.nix` (gitignored,
+machine-specific). `modules/git.nix` imports ignored `modules/git.local.nix`,
+which holds `programs.git.config`. All three imports are required — evaluation
+fails when a local file is missing.
+
+On a new machine:
+
+    cd hosts/kei-nixos
+    printf '{}\n' > storage.local.nix
+    sudo nixos-generate-config --show-hardware-config > hardware.local.nix
+    cd ../..
+    printf '{}\n' > modules/git.local.nix
+
+Add mounts to `storage.local.nix` using the template in `storage.nix`, and
+populate `programs.git.config` in `modules/git.local.nix`. Git settings render
+into `/etc/gitconfig` and apply to every user; per-user and per-repo config
+take precedence. Back up all three local files outside the repo before
+reinstalling.
+
+## Rebuilding
+
+Always pass the flake source as an explicit `path:`:
+
+    sudo nixos-rebuild switch --flake path:/home/kei/projects/kei-nixos#kei-nixos
+
+A bare `.#kei-nixos` resolves through the *git* source, and git excludes the
+ignored `.local.nix` files — the eval would then fail on the missing imports.
+`path:` copies the working tree as-is, ignored files included.
+
+That same behaviour is why secrets must never live in this repo: a `path:`
+flake is copied into the Nix store verbatim, so any file in the tree ends up
+world-readable under `/nix/store`. Keep secrets in `/etc/nixos/secrets/` or
+sops-encrypted files.
 
 ## niri's config
 

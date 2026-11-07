@@ -4,3 +4,6 @@
 /secrets/*.env
 /secrets/*.key
 /secrets/keys.txt
+hosts/kei-nixos/hardware.local.nix
+hosts/kei-nixos/storage.local.nix
+modules/git.local.nix
