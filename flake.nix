@@ -1,5 +1,5 @@
 {
-  description = "kei-nixos — DDD Infrastructure-as-Code blueprint";
+  description = "kei-nixos";
 
   nixConfig = {
     extra-substituters = [ "https://noctalia.cachix.org" ];
@@ -14,8 +14,6 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Hermes stays in `nix profile`: its uv2nix build must not gate a system rebuild.
 
     sops-nix = {
       url = "github:Mic92/sops-nix";

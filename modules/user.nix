@@ -33,8 +33,11 @@
       fastfetch
 
       # Desktop applications
+      element-desktop
       floorp-bin
       keepassxc
+      stoat-desktop
+      vesktop
 
       # Dotfiles manager
       chezmoi

@@ -19,5 +19,11 @@
         exec nano "$@"
       fi
     '')
+
+    # X server for X11 clients. niri 26.04 hosts X11 via xwayland-satellite:
+    # it spawns the satellite on demand and exports DISPLAY into the systemd
+    # user environment. Missing binary = "Unable to open a connection to X"
+    # in every X11 app (Steam), logged as "error spawning xwayland-satellite".
+    xwayland-satellite
   ];
 }

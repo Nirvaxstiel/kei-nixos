@@ -15,9 +15,11 @@
 
     ../../modules/desktop/niri.nix
     ../../modules/desktop/nautilus.nix
+    ../../modules/desktop/steam.nix
 
     ../../modules/services/filesystems.nix
     ../../modules/services/greetd.nix
+    ../../modules/services/mullvad.nix
 
     ../../modules/noctalia.nix
     ../../modules/sops.nix
