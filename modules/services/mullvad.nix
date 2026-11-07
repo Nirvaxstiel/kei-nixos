@@ -5,5 +5,6 @@
   # window exists. mullvad-vpn is the same daemon plus the Electron GUI and its
   # desktop entry.
   services.mullvad-vpn.enable = true;
+  # Re-login to see the GUI after adding this line
   services.mullvad-vpn.package = pkgs.mullvad-vpn;
 }

@@ -1,8 +1,6 @@
 {
   imports = [ ./graphics.nix ];
 
-  # One GPU vendor per host. A host imports exactly one file from modules/gpu/.
-
   # Turns on the hardware.nvidia module.
   services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -19,9 +17,6 @@
   # on Wayland, so it has to list them.
   boot.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" ];
 
-  # The driver is unfree. These are package names. The list merges with other
-  # modules, so the exception stays with the file that needs it and disappears
-  # when the vendor changes.
   nixpkgs.config.allowUnfreePackages = [
     "nvidia-settings"
     "nvidia-x11"
