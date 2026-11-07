@@ -21,6 +21,9 @@
     # Browsers
     floorp-bin
 
+    # Password manager
+    keepassxc
+
     # Archivers. The base install has tar, gzip, bzip2, xz and zstd, but not
     # zip or 7z.
     p7zip
